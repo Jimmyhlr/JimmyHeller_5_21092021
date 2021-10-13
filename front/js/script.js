@@ -1,13 +1,77 @@
 //          ********** FETCH ASYNCHRONE **********
 
+/*
+
+const options = {
+	method: "GET",
+	"Content-Type": "application/json",
+}
+
+
+fetch("https://picsum.photos/v2/list?page=2&limit=100", options).then(function (response) {
+	return response.json();
+}).then(function (data) {
+	console.log(data);
+	data.forEach(function (objet) {
+		const newImg = document.createElement("img");
+		newImg.src = objet.download_url;
+		newImg.alt = objet.author;
+		newImg.className = "w-32 inline-block"
+		listPicture.appendChild(newImg);
+	});
+}).catch(function (error) {
+	console.error(error);
+});
+
+
+
+const insertProduct = document.getElementById("items");
+
+const options = {
+	method: "GET",
+	"Content-Type": "application/json",
+}
+
+fetch("http://localhost:3000/api/products", options).then(function (response) {
+	return response.json();
+}).then(function (products) {
+	console.table(products);
+	products.forEach(function (objet) {
+		const items = document.createElement("items");
+		items._id = objet.download_url;
+		items.name = objet.author;
+    items.price = objet.author;
+		items.imageUrl = objet.author;
+		items.description = objet.author;
+		items.altTxt = objet.author;
+
+		items.className = "w-32 inline-block"
+		insertProduct.appendChild(items);
+	});
+}).catch(function (error) {
+	console.error(error);
+});
+
+*/
+
+
+const options = {
+	method: "GET",
+	"Content-Type": "application/json",
+}
+
 async function catchProducts() {
-  const response = await fetch("http://localhost:3000/api/products");
-  const json = await response.json();
-  console.log(json);
-  json.forEach((item) => {
-    console.log(item)
-  })
-  document.getElementById("items").textContent = response.json;
+  //JSON DATA RETRIEVAL
+  const response = await fetch("http://localhost:3000/api/products", options);
+  const productList = await response.json();
+  console.table(productList);
+  //PRODUCT DISPLAY
+  let productDisplay = "<ul>";
+  productList.forEach(function(product) {
+    console.log("produit" + product.name);
+    productDisplay += "<li>" + product.name + "</li>";
+  });
+  document.getElementById("items").innerHTML = productDisplay + "</ul>";
 }
 
 catchProducts().catch(error => {
@@ -15,8 +79,12 @@ catchProducts().catch(error => {
   console.error(error);
 });
 
-//          ********** FETCH SYNCHRONE **********
+
 /*
+
+
+//          ********** FETCH SYNCHRONE **********
+
 fetch("http://localhost:3000/api/products")
   .then(response => {
     return response.json();
@@ -24,7 +92,9 @@ fetch("http://localhost:3000/api/products")
   .then(data => {         //**********UTILISER DATA OU RESPONSE??? ***********
     console.log(data);    //**********UTILISER DATA OU RESPONSE??? ***********
   })
-*/
+
+forEach(data as product);
+
 
 
 
