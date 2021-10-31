@@ -1,4 +1,4 @@
-//          ********** FETCH ASYNCHRONE **********
+//          ********** FETCH PRODUCT LIST **********
 
 const options = {
 	method: "GET",
@@ -6,16 +6,17 @@ const options = {
 }
 
 async function catchProducts() {
+
   //JSON DATA RETRIEVAL
   const response = await fetch("http://localhost:3000/api/products", options);
   const productList = await response.json();
   console.table(productList);
-  //PRODUCT DISPLAY
+  //JSON DATA USAGE (product display)
   let productDisplay = "<div>";
-  productList.forEach(function(product) {
-    productDisplay += '<a href="">' //REMPLACER PAR : '<a href="' + product page link + '">'
+  productList.forEach(product => {
+    productDisplay += '<a href="../html/product.html?id=' + product._id + '" class="productPageLink">'
     + '<article>'
-    + '<img src="' + product.imageUrl + '" alt="Lorem ipsum dolor sit amet, Kanap name1">'
+    + '<img src="' + product.imageUrl + '" alt="' + product.altTxt + '">'
     + '<h3 class="productName">' + product.name + '</h3>'
     + '<p class="productDescription">' + product.description + '</p>'
     + '</article>'
