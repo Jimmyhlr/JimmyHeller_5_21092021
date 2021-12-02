@@ -1,10 +1,9 @@
-//          ********** FETCH PRODUCT INFORMATIONS **********
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const options = {
 	method: "GET",
 	"Content-Type": "application/json",
 }
-
 
 async function catchProduct(productId) {
   //JSON DATA RETRIEVAL
@@ -30,19 +29,42 @@ async function catchProduct(productId) {
       document.getElementById("colors").innerHTML += colors;
       console.log(color)
     })
-
-    /*
-    let productColor1Display = '<option value="' + product.colors[0] + '">' + product.colors[0] + '</option>';
-    let productColor2Display = '<option value="' + product.colors[1] + '">' + product.colors[1] + '</option>';
-    let productColor3Display = '<option value="' + product.colors[2] + '">' + product.colors[2] + '</option>';
-    let productColor4Display = '<option value="' + product.colors[3] + '">' + product.colors[3] + '</option>';
-    document.getElementById("colors").innerHTML = productColor1Display + productColor2Display + productColor3Display + productColor4Display;
-    */
-
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const search = new URLSearchParams(window.location.search);
 const id = search.get("id");
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//ADD PRODUCT.JSON TO COOKIES - START
+var addToCartButton = document.getElementById("addToCart");
+addToCartButton.addEventListener("click", addToCookies);
+
+function addToCookies() {
+  //---ID---
+  const search = new URLSearchParams(window.location.search);
+  const id = search.get("id");
+  //---COLOR---
+  const colorList = document.getElementById('colors');
+  const colorChoice = colorList.options[colorList.selectedIndex].text;
+  //---QUANTITY---
+  const quantityField = document.getElementById('quantity');
+  const quantityChoice = quantityField.value;  
+  //---JSON---
+  var cartJson = {
+    "id": id,
+    "color": colorChoice,
+    "quantity": quantityChoice
+  };
+  var cartJsonString = JSON.stringify(cartJson);
+  //---LOCALSTORAGE---
+  localStorage.setItem(id + '.' + colorChoice, cartJsonString);  
+}
+//ADD PRODUCT.JSON TO COOKIES - END
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 catchProduct(id).catch(error => {
   console.log("Oh no! An error has been detected! :(");
