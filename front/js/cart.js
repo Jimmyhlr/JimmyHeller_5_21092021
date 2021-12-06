@@ -88,15 +88,12 @@ catchProducts().catch(error => {
 
 const orderButton = document.getElementById('orderButton');
 async function order() {
-let firstName = document.getElementById("firstName").value;
-let lastName = document.getElementById("lastName").value;
-let address = document.getElementById("address").value;
-let city = document.getElementById("city").value;
-let email = document.getElementById("email").value;
-const contact =
-    {
-        firstName, lastName, address, city, email
-    }
+    let firstName = document.getElementById("firstName").value;
+    let lastName = document.getElementById("lastName").value;
+    let address = document.getElementById("address").value;
+    let city = document.getElementById("city").value;
+    let email = document.getElementById("email").value;
+    const contact = {firstName, lastName, address, city, email}
     console.log(contact);
     var products = [];
     Object.keys(localStorage).forEach(async function (key) {
@@ -105,14 +102,31 @@ const contact =
         products.push(getProductId);        
     })
     console.log(products);
-    const options = {
-        method: "POST",
-        Headers: {'content-type': 'application/JSON'},
-        body: JSON.stringify({contact, products}),
-    }
-    const response = await fetch("http://localhost:3000/api/products/order", options);
-    let orderResponse = await response.json();
-    console.log(orderResponse);
-    console.log(JSON.stringify({contact, products}));
+    createOrder(contact, products)
 }
+
+function createOrder(contact, products) {
+    fetch("http://localhost:3000/api/products/order", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ contact, products }),
+        })
+          .then(function (res) {
+            if (res.ok) {
+              return res.json();
+            }
+          })
+          .then(function (order) {
+            console.log("Tout va bien", order);
+//            window.location.replace("./confirmation.html?orderId=" + order.orderId);
+          })
+          .catch(function (err) {
+            // Une erreur est survenue
+            console.error(err);
+          });
+}
+
 orderButton.addEventListener('click', order);
