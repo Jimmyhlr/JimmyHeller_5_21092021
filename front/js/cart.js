@@ -120,11 +120,10 @@ function createOrder(contact, products) {
             }
           })
           .then(function (order) {
-            console.log("Tout va bien", order);
-//            window.location.replace("./confirmation.html?orderId=" + order.orderId);
+            console.log(order);
+            window.location.replace("./confirmation.html?orderId=" + order.orderId);
           })
           .catch(function (err) {
-            // Une erreur est survenue
             console.error(err);
           });
 }
