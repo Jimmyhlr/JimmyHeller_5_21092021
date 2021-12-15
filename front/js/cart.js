@@ -35,8 +35,6 @@ async function catchProducts(productId) {
         + "</article>";
         document.getElementById("cart__items").innerHTML += productDisplay;
         //--------------------
-
-        //--------------------
         var totalQuantity = document.getElementById('totalQuantity');
         var totalPrice = document.getElementById('totalPrice');
         totalQuantity2 += parseInt(getProductJson.quantity);
